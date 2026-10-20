@@ -2,4 +2,4 @@ discord.py
 requests
 feedparser
 beautifulsoup4
-flask
+flaskflask

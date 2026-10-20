@@ -1,4 +1,7 @@
 import os
+from aiohttp import web
+import asyncio
+import os
 import random
 import threading
 import urllib.request
@@ -83,6 +86,21 @@ async def on_ready():
     if not send_daily_otter.is_running():
         send_daily_otter.start()
 
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Otterbot is alive!"
+
+def run_web_server():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+# Start web server in background thread, then start bot
+threading.Thread(target=run_web_server, daemon=True).start()
+
+TOKEN = os.environ.get("DISCORD_TOKEN")
+bot.run(TOKEN)
 
 # Start web server in background thread, then start bot
 threading.Thread(target=run_web_server, daemon=True).start()
